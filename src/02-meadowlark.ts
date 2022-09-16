@@ -1,6 +1,7 @@
 import express from 'express'
 //import * as expressHandlebars from 'express-handlebars'
 const expressHandlebars = require('express-handlebars')
+import {getFortune} from './lib/fortune'
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -11,19 +12,13 @@ app.use(express.static(__dirname + '/public'))
 
 app.set('view engine', 'handlebars')
 
-const fortunes = [
-    "Conquer your fears of they will conquer you.",
-    "Rivers need springs",
-    "Do not fear what you don't know",
-    "You will have a pleasant surprise",
-    "Whenever possivle, keep it simple"
-]
+
 
 app.get('/',(req,res) => {res.render('home')})
 
 app.get('/about',(req,res) => {
-    const RandomFortunes = fortunes[Math.floor(Math.random()*fortunes.length)]
-    res.render('about',{fortune: RandomFortunes})
+   // const RandomFortunes = fortunes[]
+    res.render('about',{fortune: getFortune()})
 })
 
 
