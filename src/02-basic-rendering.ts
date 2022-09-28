@@ -1,10 +1,24 @@
 import express from 'express'
 const app = express()
 import {engine} from 'express-handlebars'
+import * as bodyparser from 'body-parser'
 
 app.engine('handlebars',engine())
 app.set('view engine', 'handlebars')
 app.set('views','src/views')
+app.use(bodyparser.urlencoded({extended: false}))
+
+app.get('/thank-you',(req:any,res:any)=>{
+    res.render('10-thank-you')
+})
+
+app.get('*', (req, res) => res.render('11-home'))
+
+app.post('/process-contact', (req, res) => {
+    console.log(`received contact from ${req.body.name} <${req.body.email}>`)
+    res.redirect(303, '/thank-you')
+})
+  
 
 app.get('/about', (req:any,res:any) => {
     res.render('about')
